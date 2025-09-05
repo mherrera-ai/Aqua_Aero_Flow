@@ -52,7 +52,7 @@ The application follows a modular architecture with clear separation of concerns
 
 ```bash
 # Clone the repository
-git clone https://github.com/[your-username]/aqua-aero-flow.git
+git clone https://github.com/mherrera-ai/Aqua_Aero_Flow.git
 cd aqua-aero-flow
 
 # Install dependencies
