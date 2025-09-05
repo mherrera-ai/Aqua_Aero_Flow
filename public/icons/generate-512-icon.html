@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate 512x512 Icon</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+      background: #f0f0f0;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      display: block;
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>512x512 Icon Generator for Aqua Aero Flow</h1>
+  <canvas id="canvas" width="512" height="512"></canvas>
+  <button onclick="download()">Download icon-512.png</button>
+
+  <script>
+    const canvas = document.getElementById('canvas')
+    const ctx = canvas.getContext('2d')
+
+    // Background gradient
+    const gradient = ctx.createLinearGradient(0, 0, 512, 512)
+    gradient.addColorStop(0, '#001122')
+    gradient.addColorStop(0.5, '#003366')
+    gradient.addColorStop(1, '#0066cc')
+    ctx.fillStyle = gradient
+    ctx.fillRect(0, 0, 512, 512)
+
+    // Draw flowing particles
+    function drawParticle(x, y, size, opacity) {
+      ctx.globalAlpha = opacity
+      const particleGradient = ctx.createRadialGradient(x, y, 0, x, y, size)
+      particleGradient.addColorStop(0, '#00ffff')
+      particleGradient.addColorStop(0.5, '#00ccff')
+      particleGradient.addColorStop(1, 'rgba(0, 204, 255, 0)')
+      ctx.fillStyle = particleGradient
+      ctx.beginPath()
+      ctx.arc(x, y, size, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
+    // Create flow pattern
+    for (let i = 0; i < 50; i++) {
+      const x = Math.random() * 512
+      const y = Math.random() * 512
+      const size = Math.random() * 30 + 10
+      const opacity = Math.random() * 0.6 + 0.2
+      drawParticle(x, y, size, opacity)
+    }
+
+    // Draw wave lines
+    ctx.globalAlpha = 0.3
+    ctx.strokeStyle = '#00ffff'
+    ctx.lineWidth = 3
+    for (let i = 0; i < 5; i++) {
+      ctx.beginPath()
+      for (let x = 0; x <= 512; x += 10) {
+        const y = 256 + Math.sin(x * 0.02 + i) * 100 + i * 30 - 60
+        if (x === 0) {
+          ctx.moveTo(x, y)
+        } else {
+          ctx.lineTo(x, y)
+        }
+      }
+      ctx.stroke()
+    }
+
+    // Add logo text
+    ctx.globalAlpha = 1
+    ctx.font = 'bold 72px -apple-system, sans-serif'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    
+    // Text shadow
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+    ctx.fillText('AAF', 256 + 3, 256 + 3)
+    
+    // Main text
+    ctx.fillStyle = '#00ffff'
+    ctx.fillText('AAF', 256, 256)
+    
+    // Subtitle
+    ctx.font = '24px -apple-system, sans-serif'
+    ctx.fillStyle = 'rgba(0, 255, 255, 0.8)'
+    ctx.fillText('AQUA AERO FLOW', 256, 320)
+
+    function download() {
+      const link = document.createElement('a')
+      link.download = 'icon-512.png'
+      link.href = canvas.toDataURL()
+      link.click()
+    }
+  </script>
+</body>
+</html>

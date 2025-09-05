@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; font-src 'self' data:; worker-src 'self' blob:;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <title>Aqua Aero Flow - Interactive Particle Visualization</title>
+    <meta name="description" content="A mesmerizing, interactive particle flow visualization with audio-reactive modes and customizable presets" />
+    <meta name="theme-color" content="#008080" />
+    
+    <link rel="icon" type="image/png" href="/icons/icon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/icons/icon-192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    
+    <meta property="og:title" content="Aqua Aero Flow" />
+    <meta property="og:description" content="Interactive particle flow visualization with audio-reactive modes" />
+    <meta property="og:image" content="/icons/social-preview.png" />
+    <meta property="og:url" content="https://aqua-aero-flow.pages.dev" />
+    <meta property="og:type" content="website" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Aqua Aero Flow" />
+    <meta name="twitter:description" content="Interactive particle flow visualization" />
+    <meta name="twitter:image" content="/icons/social-preview.png" />
+  </head>
+  <body>
+    <canvas id="canvas" role="img" aria-label="Interactive particle flow visualization"></canvas>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

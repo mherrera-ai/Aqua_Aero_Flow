@@ -1,0 +1,603 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'W95FA';
+  src: local('MS Sans Serif'), local('Microsoft Sans Serif'), local('Geneva'), local('sans-serif');
+}
+
+body {
+  overflow: hidden;
+  background: #008080;
+  font-family: 'W95FA', 'MS Sans Serif', Geneva, sans-serif;
+  user-select: none;
+  font-size: 11px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+canvas {
+  display: block;
+  cursor: crosshair;
+  background: #000000;
+}
+
+/* Windows 95 style control panel */
+.controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 0;
+  width: 380px;
+  max-width: 90vw;
+  color: #000000;
+  z-index: 1000;
+  box-shadow: 1px 1px 0 #000000;
+  font-size: 11px;
+}
+
+.controls-header {
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: #ffffff;
+  padding: 2px 2px 3px 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: move;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.controls-header h3 {
+  margin: 0;
+  padding-left: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0;
+  text-transform: none;
+  text-shadow: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.controls-header h3::before {
+  content: '🌊';
+  font-size: 14px;
+}
+
+.window-buttons {
+  display: flex;
+  gap: 2px;
+}
+
+.toggle-collapse,
+.window-maximize,
+.window-close {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  color: #000000;
+  width: 16px;
+  height: 14px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Marlett', 'W95FA', sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.toggle-collapse:active,
+.window-maximize:active,
+.window-close:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding-left: 1px;
+  padding-top: 1px;
+}
+
+.window-maximize {
+  display: none;
+}
+.window-close {
+  display: none;
+}
+
+.controls-body {
+  padding: 8px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background: #c0c0c0;
+}
+
+/* Windows 95 scrollbar */
+.controls-body::-webkit-scrollbar {
+  width: 16px;
+}
+
+.controls-body::-webkit-scrollbar-track {
+  background: #c0c0c0;
+  border: 1px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.controls-body::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+}
+
+.controls-body::-webkit-scrollbar-button {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  height: 16px;
+}
+
+/* Tab system like Windows 95 */
+.tab-container {
+  margin-bottom: 8px;
+}
+
+.tab-buttons {
+  display: flex;
+  position: relative;
+  margin-bottom: -2px;
+  padding-left: 4px;
+}
+
+.tab-button {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  border-bottom: none;
+  padding: 4px 12px;
+  margin-right: 2px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  font-weight: normal;
+  color: #000000;
+}
+
+.tab-button.active {
+  background: #c0c0c0;
+  z-index: 2;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #c0c0c0;
+}
+
+.tab-button:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.tab-content {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 12px;
+  min-height: 200px;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* Control groups with Windows 95 group box style */
+.control-group {
+  margin-bottom: 12px;
+  border: 2px groove #ffffff;
+  padding: 8px;
+  position: relative;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: #000000;
+  font-weight: normal;
+  background: #c0c0c0;
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  padding: 0 4px;
+}
+
+.control-group .control-content {
+  margin-top: 4px;
+}
+
+.value {
+  color: #000080;
+  font-weight: bold;
+  float: right;
+  font-size: 11px;
+  font-family: 'Courier New', monospace;
+}
+
+/* Windows 95 style slider */
+input[type='range'] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 20px;
+  background: transparent;
+  outline: none;
+  margin: 8px 0;
+}
+
+input[type='range']::-webkit-slider-track {
+  height: 4px;
+  background: #808080;
+  border: 1px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 11px;
+  height: 20px;
+  background: #c0c0c0;
+  cursor: pointer;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  margin-top: -9px;
+}
+
+input[type='range']::-moz-range-track {
+  height: 4px;
+  background: #808080;
+  border: 1px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 11px;
+  height: 20px;
+  background: #c0c0c0;
+  cursor: pointer;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+}
+
+/* Windows 95 style text input */
+input[type='text'] {
+  width: 100%;
+  padding: 2px 3px;
+  background: #ffffff;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  color: #000000;
+  font-size: 11px;
+  font-family: 'W95FA', 'MS Sans Serif', Geneva, sans-serif;
+  outline: none;
+  margin-bottom: 8px;
+}
+
+input[type='text']:focus {
+  background: #ffffff;
+}
+
+input[type='text']::placeholder {
+  color: #808080;
+}
+
+/* Windows 95 style select dropdown */
+select {
+  width: 100%;
+  padding: 2px 3px;
+  background: #ffffff;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  color: #000000;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: 'W95FA', 'MS Sans Serif', Geneva, sans-serif;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='8' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l4 4 4-4z' fill='%23000000'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  padding-right: 20px;
+}
+
+select:focus {
+  outline: 1px dotted #000000;
+  outline-offset: -2px;
+}
+
+/* Windows 95 style button */
+button {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  color: #000000;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: 'W95FA', 'MS Sans Serif', Geneva, sans-serif;
+  outline: none;
+  position: relative;
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+button:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding-left: 13px;
+  padding-top: 5px;
+  padding-right: 11px;
+  padding-bottom: 3px;
+}
+
+button:focus {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
+}
+
+button.active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  background: #ffffff;
+  font-weight: bold;
+}
+
+button:disabled {
+  color: #808080;
+  text-shadow: 1px 1px 0 #ffffff;
+}
+
+.preset-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin: 12px 0;
+}
+
+.preset-buttons button {
+  font-size: 11px;
+  padding: 4px 8px;
+}
+
+.custom-presets {
+  display: grid;
+  gap: 4px;
+}
+
+.custom-presets button {
+  padding: 4px 8px;
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin: 12px 0;
+}
+
+.action-buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 11px;
+  padding: 4px 8px;
+}
+
+.action-buttons button .icon {
+  font-size: 14px;
+  font-style: normal;
+}
+
+/* Status bar like Windows 95 */
+.info-panel {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  padding: 2px 4px;
+  margin-top: 12px;
+  font-size: 11px;
+  font-family: 'W95FA', 'MS Sans Serif', Geneva, sans-serif;
+  display: flex;
+  gap: 12px;
+}
+
+.info-panel > div {
+  display: flex;
+  gap: 4px;
+  padding: 0 8px;
+  border-right: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.info-panel > div:last-child {
+  border-right: none;
+}
+
+.info-panel span {
+  color: #000000;
+  font-weight: normal;
+}
+
+/* Tooltip Windows 95 style */
+.tooltip {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #ffffe1;
+  color: #000000;
+  padding: 2px 4px;
+  border: 1px solid #000000;
+  font-size: 11px;
+  font-weight: normal;
+  z-index: 2000;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.2s;
+  font-family: 'W95FA', 'MS Sans Serif', Geneva, sans-serif;
+}
+
+.tooltip.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Checkbox Windows 95 style */
+input[type='checkbox'] {
+  width: 13px;
+  height: 13px;
+  margin-right: 4px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  margin: 4px 0;
+}
+
+/* Radio button Windows 95 style */
+input[type='radio'] {
+  width: 13px;
+  height: 13px;
+  margin-right: 4px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 8px 0;
+}
+
+.radio-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .controls {
+    width: calc(100vw - 20px);
+    max-height: 70vh;
+    top: 10px;
+    right: 10px;
+  }
+
+  .controls-header {
+    padding: 3px;
+  }
+
+  .controls-body {
+    padding: 6px;
+  }
+
+  .tab-button {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .action-buttons button {
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+
+  .action-buttons button .icon {
+    display: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 1px dotted #000000;
+  outline-offset: -2px;
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 1px dotted #000000;
+  outline-offset: -2px;
+}
+
+/* Collapsed state */
+.controls.collapsed .controls-body {
+  display: none;
+}
+
+.controls.collapsed {
+  width: auto;
+}
+
+/* Loading indicator */
+.loading {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #808080;
+  border-right-color: #000000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Progress bar Windows 95 style */
+.progress-bar {
+  height: 16px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: repeating-linear-gradient(90deg, #000080 0px, #000080 8px, #1084d0 8px, #1084d0 16px);
+  transition: width 0.3s;
+}
+
+/* Separator line */
+.separator {
+  height: 2px;
+  background: #808080;
+  border-bottom: 2px solid #ffffff;
+  margin: 8px 0;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body { margin: 0; padding: 20px; background: #f0f0f0; }
+canvas { margin: 10px; border: 1px solid #ccc; }
+</style>
+</head>
+<body>
+<h2>Right-click and save these icons</h2>
+<canvas id="icon32" width="32" height="32"></canvas>
+<canvas id="icon192" width="192" height="192"></canvas>
+<canvas id="icon512" width="512" height="512"></canvas>
+<script>
+function drawIcon(canvasId, size) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  
+  // Gradient background
+  const gradient = ctx.createLinearGradient(0, 0, size, size);
+  gradient.addColorStop(0, '#001122');
+  gradient.addColorStop(1, '#003366');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, size, size);
+  
+  // Draw some particles
+  ctx.fillStyle = '#00ffff';
+  ctx.shadowBlur = size * 0.05;
+  ctx.shadowColor = '#00ffff';
+  
+  for (let i = 0; i < 5; i++) {
+    const x = size * (0.2 + i * 0.15);
+    const y = size * (0.3 + Math.sin(i) * 0.2);
+    const radius = size * 0.03;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  
+  // Draw flow lines
+  ctx.strokeStyle = '#00ccff';
+  ctx.lineWidth = size * 0.01;
+  ctx.beginPath();
+  ctx.moveTo(size * 0.1, size * 0.5);
+  ctx.bezierCurveTo(
+    size * 0.3, size * 0.3,
+    size * 0.7, size * 0.7,
+    size * 0.9, size * 0.5
+  );
+  ctx.stroke();
+}
+
+drawIcon('icon32', 32);
+drawIcon('icon192', 192);
+drawIcon('icon512', 512);
+</script>
+</body>
+</html>
